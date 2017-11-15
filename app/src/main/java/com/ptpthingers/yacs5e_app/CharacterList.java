@@ -43,6 +43,7 @@ public class CharacterList extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_character_list, container, false);
 
+
         return rootView;
     }
 
