@@ -29,6 +29,7 @@ class Character {
     }
 
     public Character(int charFile) {
-        //TODO: import character file and fill the object with parsed data
+        /* TODO: import character file and fill the object with parsed data
+        https://www.androidhive.info/2012/01/android-json-parsing-tutorial/ */
     }
 }
