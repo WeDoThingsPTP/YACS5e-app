@@ -1,5 +1,6 @@
 package com.ptpthingers.yacs5e_app;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -24,6 +25,8 @@ public class CharacterListFragment extends Fragment {
     private int mCurrentVisiblePosition;
     private static CharacterAdapter mAdapter;
     private static LinkedList<String> mCharacterList;
+    private SharedPreferences accountSharedPreferences;
+
 
     public CharacterListFragment() {
         // Required empty public constructor
@@ -33,9 +36,11 @@ public class CharacterListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCurrentVisiblePosition = 0;
+        accountSharedPreferences = getContext().getSharedPreferences("account", Context.MODE_PRIVATE);
         mCharacterList = new LinkedList<>();
         try {
-            mCharacterList.addAll(DBWrapper.getUuidList());
+            String username = accountSharedPreferences.getString("username", "");
+            mCharacterList.addAll(DBWrapper.getUuidList(username));
         } catch (NullPointerException npe) {
             Log.d("CharacterList", "onCreate: Empty List!");
         }
@@ -59,7 +64,8 @@ public class CharacterListFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mCharacterList.add(new Character().post());
+                String username = accountSharedPreferences.getString("username", "");
+                mCharacterList.add(new Character().post(username));
                 mAdapter.notifyItemInserted(mCharacterList.size());
             }
         });
