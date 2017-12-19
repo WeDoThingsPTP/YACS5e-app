@@ -2,20 +2,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ptpthingers.yacs5e_app.CharacterSheetAttacksFragment">
+    tools:context="com.ptpthingers.yacs5e_app.CharacterSheetEquipmentFragment">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/attacks_recycler"
-        android:scrollbars="vertical"
+        android:id="@+id/equipment_recycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    </android.support.v7.widget.RecyclerView>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_add_attack"
+        android:id="@+id/fab_add_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_add" />
+
 
 </android.support.design.widget.CoordinatorLayout>

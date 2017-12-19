@@ -1,6 +1,7 @@
 package com.ptpthingers.yacs5e_app;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -15,6 +16,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.ptpthingers.synchronization.DBWrapper;
 import com.ptpthingers.synchronization.GeneralAccount;
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity
 
     public static final String CHAR_UUID = "character_uuid";
     private FragmentManager fragmentManager;
+    Button gotoLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +42,7 @@ public class MainActivity extends AppCompatActivity
 
         if (savedInstanceState == null) {
             Fragment fragment = null;
-            Class fragmentClass = null;
-            fragmentClass = CharacterListFragment.class;
+            Class fragmentClass = CharacterListFragment.class;
 
             try {
                 fragment = (Fragment) fragmentClass.newInstance();
@@ -62,13 +65,25 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View header = navigationView.getHeaderView(0);
+        gotoLogin = header.findViewById(R.id.goto_login);
+        gotoLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loginAct = new Intent(getBaseContext(), LoginScreen.class);
+                startActivity(loginAct);
+            }
+        });
+
         SharedPreferences sharedPreferences = getSharedPreferences("connection", MODE_PRIVATE);
         boolean isFirstRun = sharedPreferences.getBoolean("FIRSTRUN", true);
         if (isFirstRun) {
-            sharedPreferences.edit().putString("mHost","ptp-thingers.pl" ).apply();
+            sharedPreferences.edit().putString("mHost", "ptp-thingers.pl").apply();
             sharedPreferences.edit().putInt("mPort", 13334).apply();
             sharedPreferences.edit().putBoolean("FIRSTRUN", true).apply();
         }
+
+        checkIfLogged();
 
         // Create your sync account
         GeneralAccount.createSyncAccount(this);
@@ -83,6 +98,12 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkIfLogged();
     }
 
     @Override
@@ -119,21 +140,10 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         Fragment fragment;
         Class fragmentClass = null;
-        Intent newAct;
 
         switch (id) {
             case R.id.nav_char_list:
                 fragmentClass = CharacterListFragment.class;
-                break;
-            case R.id.nav_camp_list:
-                fragmentClass = CampaignList.class;
-                break;
-            case R.id.nav_search_camps:
-                //TODO: implement campaign search
-                break;
-            case R.id.nav_rpc_test:
-                newAct = new Intent(this, LoginScreen.class);
-                startActivity(newAct);
                 break;
         }
 
@@ -153,5 +163,14 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    private void checkIfLogged() {
+        String login = getSharedPreferences("account", Context.MODE_PRIVATE).getString("username", "");
+        if(!login.equals("")) {
+            gotoLogin.setText(String.format("Hello, %s!", login));
+        } else {
+            gotoLogin.setText("Log in or register!");
+        }
     }
 }

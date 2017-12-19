@@ -39,6 +39,7 @@ class Character {
     private String race;
     private List<Feature> traits;
     private String mUuid;
+    private List<Item> equipment;
 
     public Character() {
         initializeCharacter();
@@ -297,6 +298,14 @@ class Character {
         this.miscProfs = miscProfs;
     }
 
+    public List<Item> getEquipment() {
+        return equipment;
+    }
+
+    public void setEquipment(List<Item> equipment) {
+        this.equipment = equipment;
+    }
+
     public String post(String ownerLogin) {
         if (mUuid == null) {
             mUuid = UUID.randomUUID().toString();
@@ -342,6 +351,7 @@ class Character {
 
         this.mShortDesc = "";
         this.traits = new LinkedList<>();
+        this.equipment = new LinkedList<>();
     }
 
     private void initializeCharacter(String blob) {
@@ -379,6 +389,7 @@ class Character {
 
         this.mShortDesc = tempChar.mShortDesc;
         this.traits = tempChar.getTraits();
+        this.equipment = tempChar.getEquipment();
     }
 
     @Override

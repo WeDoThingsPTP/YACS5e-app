@@ -10,14 +10,30 @@ public class Item {
     String name;
     String description;
 
-    public Item(String name, String description) {
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
 
     public Item() {
-        this.description = "";
-        this.name = "";
+        description = "";
+        name = "";
+    }
+
+    public Item(String name, String description) {
+        this.description = description;
+        this.name = name;
     }
 
     static Item itemFromJsonObject(JsonObject jsonObject) {

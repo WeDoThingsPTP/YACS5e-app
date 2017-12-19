@@ -12,7 +12,6 @@ import com.google.gson.JsonParser;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -95,6 +94,23 @@ class Feature {
         }
         return returnFeatureList;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
 
     private static Feature singleFeature(JsonObject featureJsonObj){
         Set<String> featureKeySet = featureJsonObj.keySet();

@@ -13,6 +13,7 @@
         android:padding="10dp">
 
         <TextView
+            android:id="@+id/trait_item_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/card_title"
@@ -21,9 +22,9 @@
             android:layout_marginBottom="@dimen/activity_vertical_margin"/>
 
         <TextView
+            android:id="@+id/trait_item_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/lorem_ipsum"
             />
 
     </LinearLayout>

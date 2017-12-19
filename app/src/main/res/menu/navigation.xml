@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_basic_info"
+        android:icon="@drawable/ic_face_black_24dp"
+        android:title="@string/title_basic" />
+
+    <item
+        android:id="@+id/navigation_ability_scores"
+        android:icon="@drawable/ic_group_work_black_24dp"
+        android:title="@string/title_ability_scores" />
+
+    <item
+        android:id="@+id/navigation_proficiencies"
+        android:icon="@drawable/ic_directions_run_black_24dp"
+        android:title="@string/title_proficiencies" />
+
+</menu>
