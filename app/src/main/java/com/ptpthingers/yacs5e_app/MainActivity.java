@@ -22,6 +22,8 @@ import android.widget.Button;
 import com.ptpthingers.synchronization.DBWrapper;
 import com.ptpthingers.synchronization.GeneralAccount;
 
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         CampaignList.OnFragmentInteractionListener {
