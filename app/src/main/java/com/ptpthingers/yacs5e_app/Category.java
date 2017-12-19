@@ -5,5 +5,11 @@ package com.ptpthingers.yacs5e_app;
  */
 
 public enum Category {
-    CLASS, RACE, ITEM, FEAT;
+    CLASS("CLASS"), RACE("RACE"), ITEM("ITEM"), FEAT("FEAT");
+
+    private final String desc;
+
+    Category(String str) {
+        this.desc = str;
+    }
 }

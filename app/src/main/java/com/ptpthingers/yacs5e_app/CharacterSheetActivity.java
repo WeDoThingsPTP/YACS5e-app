@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.ptpthingers.synchronization.DBWrapper;
@@ -83,8 +82,6 @@ public class CharacterSheetActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_character_sheet, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
     }
@@ -98,23 +95,33 @@ public class CharacterSheetActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             Bundle bundle = new Bundle();
-            bundle.putString(CHAR_UUID, thisChar.getmUuid());
+            Fragment fragment = null;
+            Class fragmentClass = null;
+            bundle.putString(CHAR_UUID, getIntent().getStringExtra(CHAR_UUID));
             switch (position) {
                 case 0:
-                    CharacterSheetAbilityScoresFragment fr0 = new CharacterSheetAbilityScoresFragment();
-                    fr0.setArguments(bundle);
-                    return fr0;
+                    fragmentClass = CharacterSheetAbilityScoresFragment.class;
+                    break;
                 case 1:
-                    CharacterSheetSkillsFragment fr1 = new CharacterSheetSkillsFragment();
-                    fr1.setArguments(bundle);
-                    return fr1;
+                    fragmentClass = CharacterSheetSkillsFragment.class;
+                    break;
                 case 2:
-                    CharacterSheetAttacksFragment fr2 = new CharacterSheetAttacksFragment();
-                    fr2.setArguments(bundle);
-                    return fr2;
-                default:
-                    return PlaceholderFragment.newInstance(position + 1);
+                    fragmentClass = CharacterSheetAttacksFragment.class;
+                    break;
+                case 3:
+                    fragmentClass = CharacterSheetTraitsFragment.class;
+                    break;
+                case 4:
+                    fragmentClass = CharacterSheetEquipmentFragment.class;
             }
+
+            try {
+                fragment = (Fragment) fragmentClass.newInstance();
+                fragment.setArguments(bundle);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return fragment;
         }
 
         @Override

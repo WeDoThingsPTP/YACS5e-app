@@ -28,7 +28,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".CharacterSheetActivity"
             android:label="@string/title_activity_character_sheet"
@@ -38,16 +37,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ptpthingers.yacs5e_app.MainActivity" />
         </activity>
-
         <activity
             android:name=".LoginScreen"
             android:theme="@style/AppTheme.LoginScreen" />
-
         <activity
             android:name=".RegisterScreen"
-            android:theme="@style/AppTheme.LoginScreen"/>
+            android:theme="@style/AppTheme.LoginScreen" />
 
-        <!--Providers and services-->
+        <!-- Providers and services -->
 
         <provider
             android:name="com.ptpthingers.synchronization.CharacterContentProvider"
@@ -64,7 +61,6 @@
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator" />
         </service>
-
         <service
             android:name="com.ptpthingers.synchronization.SyncService"
             android:exported="true">
@@ -77,6 +73,14 @@
                 android:resource="@xml/syncadapter" />
         </service>
 
+        <activity
+            android:name=".CharacterEditActivity"
+            android:label="@string/title_activity_character_edit"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ptpthingers.yacs5e_app.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

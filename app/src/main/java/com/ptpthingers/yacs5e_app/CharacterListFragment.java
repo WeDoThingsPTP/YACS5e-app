@@ -1,6 +1,7 @@
 package com.ptpthingers.yacs5e_app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -66,8 +67,12 @@ public class CharacterListFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String username = accountSharedPreferences.getString("username", "");
-                mCharacterList.add(new Character().post(username));
+                String newCharUuid = new Character().post(username);
+                mCharacterList.add(newCharUuid);
                 mAdapter.notifyItemInserted(mCharacterList.size());
+                Intent editChar = new Intent(getContext(), CharacterEditActivity.class);
+                editChar.putExtra(MainActivity.CHAR_UUID, newCharUuid);
+                getContext().startActivity(editChar);
             }
         });
 

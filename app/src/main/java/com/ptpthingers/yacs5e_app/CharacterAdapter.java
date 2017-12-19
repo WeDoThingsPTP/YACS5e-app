@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,7 +42,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
     @Override
     public void onBindViewHolder(final CharacterViewHolder viewHolder, final int position) {
         Character character = new Gson().fromJson(DBWrapper.getCharEntity(mUuidList.get(position)).getData(), Character.class);
-        viewHolder.mCharacterName.setText(character.getCharName() + position);
+        viewHolder.mCharacterName.setText(character.getCharName());
         viewHolder.mCharacterDesc.setText(character.getShortDesc());
 
         viewHolder.mCharacterDelete.setOnClickListener(new View.OnClickListener() {
@@ -58,17 +57,13 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         final String removedUuid = mUuidList.get(position);
                         if (menuItem.getItemId() == R.id.delete_character) {
-                            Log.d("Hnnn", "onMenuItemClick: "+ mUuidList.size());
                             DBWrapper.setToDelete(removedUuid);
-                            Log.d("Hnnn", "onMenuItemClick: "+ mUuidList.size());
                             CharacterListFragment.deleteItem(position);
                             Snackbar.make(view, "Character deleted!", Snackbar.LENGTH_LONG).setAction("UNDO",
                                     new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view1) {
-                                            Log.d("Hnnn", "onMenuItemClick: "+ mUuidList.size());
                                             DBWrapper.unsetToDelete(removedUuid);
-                                            Log.d("Hnnn", "onMenuItemClick: "+ mUuidList.size());
                                             CharacterListFragment.addItem(position, removedUuid);
                                             Snackbar.make(view1, "Character restored", Snackbar.LENGTH_SHORT).show();
                                         }
@@ -112,6 +107,16 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
                     Intent characterSheet = new Intent(mContext, CharacterSheetActivity.class);
                     characterSheet.putExtra(CHAR_UUID, mUuidList.get(getAdapterPosition()));
                     mContext.startActivity(characterSheet);
+                }
+            });
+
+            v.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Intent editChar = new Intent(mContext, CharacterEditActivity.class);
+                    editChar.putExtra(MainActivity.CHAR_UUID, mUuidList.get(getAdapterPosition()));
+                    mContext.startActivity(editChar);
+                    return true;
                 }
             });
         }
